@@ -11,7 +11,7 @@ export class CourseEntity {
   name: string;
 
   @Column()
-  description: string;
+  detail: string;
 
   @Column()
   duration: number;
