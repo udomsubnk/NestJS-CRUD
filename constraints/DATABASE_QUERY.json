@@ -4,5 +4,8 @@
   },
   "COURSE": {
     "LIMIT_PER_QUERY": 25
+  },
+  "ASSESSMENT": {
+    "LIMIT_STUDENT_PER_QUERY": 10
   }
 }
