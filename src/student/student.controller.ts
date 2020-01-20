@@ -7,8 +7,8 @@ export class StudentController {
   constructor(private studentService: StudentService) {}
 
   @Get('/')
-  getStudents(@Query() { page = 1 }) {
-    return this.studentService.getStudents(page);
+  getStudents(@Query() { page = 1, keyword = '' }) {
+    return this.studentService.getStudents(page, keyword);
   }
 
   @Get('/:id')

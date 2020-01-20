@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { StudentEntity } from './student.entity';
 import { studentDTO } from './student.dto';
 import * as DATABASE_QUERY from '../../constraints/DATABASE_QUERY.json';
@@ -12,11 +12,16 @@ export class StudentService {
     private studentRepository: Repository<StudentEntity>,
   ) {}
 
-  async getStudents(page: number) {
+  async getStudents(page: number, keyword: string) {
     const QUERY_LIMIT = DATABASE_QUERY.STUDENT.LIMIT_PER_QUERY;
     const skip = page >= 1 ? QUERY_LIMIT * (page - 1) : 0;
 
     return await this.studentRepository.find({
+      where: [
+        { name: Like(`%${keyword}%`) },
+        { email: Like(`%${keyword}%`) },
+        { phone: Like(`%${keyword}%`) },
+      ],
       take: QUERY_LIMIT,
       skip,
     });
