@@ -7,7 +7,6 @@
   "database": "school",
   "entities": ["dist/**/*.entity.js"],
   "synchronize": true,
-  "logging": true,
   "migrations": ["dist/migration/*.js"],
   "cli": {
     "migrationsDir": "migration"
