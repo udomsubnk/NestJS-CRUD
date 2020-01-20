@@ -7,8 +7,8 @@ export class CourseController {
   constructor(private courseService: CourseService) {}
 
   @Get('/')
-  getCourses(@Query() { page = 1 }) {
-    return this.courseService.getCourses(page);
+  getCourses(@Query() { page = 1, keyword = '' }) {
+    return this.courseService.getCourses(page, keyword);
   }
 
   @Get('/:id')

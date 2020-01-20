@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseEntity } from './course.entity';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import * as DATABASE_QUERY from '../../constraints/DATABASE_QUERY.json';
 import { courseDTO } from './course.dto';
 
@@ -12,11 +12,12 @@ export class CourseService {
     private courseRepository: Repository<CourseEntity>,
   ) {}
 
-  async getCourses(page: number) {
+  async getCourses(page: number, keyword: string) {
     const QUERY_LIMIT = DATABASE_QUERY.COURSE.LIMIT_PER_QUERY;
     const skip = page >= 1 ? QUERY_LIMIT * (page - 1) : 0;
 
     return await this.courseRepository.find({
+      where: [{ name: Like(`%${keyword}%`) }, { detail: Like(`%${keyword}%`) }],
       take: QUERY_LIMIT,
       skip,
     });
