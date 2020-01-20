@@ -1,5 +1,8 @@
 {
   "STUDENT": {
     "LIMIT_PER_QUERY": 25
+  },
+  "COURSE": {
+    "LIMIT_PER_QUERY": 25
   }
 }
