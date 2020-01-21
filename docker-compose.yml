@@ -1,6 +1,6 @@
 version: '3'
 services:
-  db:
+  mariadb:
     image: mariadb:latest
     volumes:
       - /tmp/dc-test-db:/var/lib/mysql
@@ -9,4 +9,3 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: school
-    restart: always
