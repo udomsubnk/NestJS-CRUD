@@ -4,6 +4,7 @@ import { Repository, Like } from 'typeorm';
 import { StudentEntity } from './student.entity';
 import { studentDTO } from './student.dto';
 import * as DATABASE_QUERY from '../../constraints/DATABASE_QUERY.json';
+import { UtilityFunctions } from 'src/helpers/utility';
 
 @Injectable()
 export class StudentService {
@@ -14,9 +15,9 @@ export class StudentService {
 
   async getStudents(page: number, keyword: string) {
     const QUERY_LIMIT = DATABASE_QUERY.STUDENT.LIMIT_PER_QUERY;
-    const skip = page >= 1 ? QUERY_LIMIT * (page - 1) : 0;
+    const skip = UtilityFunctions.calculateDatabaseQueryOffset(page, QUERY_LIMIT);
 
-    return await this.studentRepository.find({
+    const students = await this.studentRepository.find({
       where: [
         { name: Like(`%${keyword}%`) },
         { email: Like(`%${keyword}%`) },
@@ -25,6 +26,8 @@ export class StudentService {
       take: QUERY_LIMIT,
       skip,
     });
+
+    return { students, current_page: page };
   }
 
   async getStudent(id: number) {
