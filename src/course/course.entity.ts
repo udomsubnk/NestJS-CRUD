@@ -10,7 +10,7 @@ export class CourseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column('longtext')
   detail: string;
 
   @Column()
