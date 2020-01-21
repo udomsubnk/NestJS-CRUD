@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Like } from 'typeorm';
 import { StudentEntity } from './student.entity';
-import { studentDTO } from './student.dto';
+import { createStudentDTO } from './student.dto';
 import * as DATABASE_QUERY from '../constraints/DATABASE_QUERY.json';
 import { UtilityFunctions } from 'src/helpers/utility';
 
@@ -34,14 +34,15 @@ export class StudentService {
     return await this.studentRepository.findOne({ where: { id } });
   }
 
-  async createStudent(data: studentDTO) {
+  async createStudent(data: createStudentDTO) {
     const student = await this.studentRepository.create(data);
     await this.studentRepository.save(student);
     return student;
   }
 
-  async updateStudent(id: number, data: Partial<studentDTO>) {
-    return await this.studentRepository.update({ id }, data);
+  async updateStudent(id: number, data: Partial<createStudentDTO>) {
+    await this.studentRepository.update({ id }, data);
+    return await this.studentRepository.findOne({ where: { id } });
   }
 
   async deleteStudent(id: number) {

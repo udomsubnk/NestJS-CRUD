@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CourseEntity } from './course.entity';
 import { Repository, Like } from 'typeorm';
 import * as DATABASE_QUERY from '../constraints/DATABASE_QUERY.json';
-import { courseDTO } from './course.dto';
+import { createCourseDTO } from './course.dto';
 import { UtilityFunctions } from 'src/helpers/utility';
 
 @Injectable()
@@ -30,14 +30,15 @@ export class CourseService {
     return await this.courseRepository.findOne({ where: { id } });
   }
 
-  async createCourse(data: courseDTO) {
+  async createCourse(data: createCourseDTO) {
     const course = await this.courseRepository.create(data);
     await this.courseRepository.save(course);
     return course;
   }
 
-  async updateCourse(id: number, data: Partial<courseDTO>) {
-    return await this.courseRepository.update({ id }, data);
+  async updateCourse(id: number, data: Partial<createCourseDTO>) {
+    await this.courseRepository.update({ id }, data);
+    return await this.courseRepository.findOne({ where: { id } });
   }
 
   async deleteCourse(id: number) {
