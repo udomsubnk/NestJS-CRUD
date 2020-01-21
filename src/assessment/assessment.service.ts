@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AssesmentEntity } from './assessment.entity';
 import { Repository, Like } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as DATABASE_QUERY from '../../constraints/DATABASE_QUERY.json';
+import * as DATABASE_QUERY from '../constraints/DATABASE_QUERY.json';
 import { StudentEntity } from 'src/student/student.entity';
 import { UtilityFunctions } from 'src/helpers/utility';
 import { CourseEntity } from 'src/course/course.entity';
